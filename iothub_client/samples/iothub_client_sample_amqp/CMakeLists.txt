@@ -11,6 +11,7 @@ endif()
 
 set(iothub_client_sample_amqp_c_files
 	iothub_client_sample_amqp.c
+	../../../certs/certs.c
 )
 
 set(iothub_client_sample_amqp_h_files
@@ -24,6 +25,7 @@ IF(WIN32)
 ENDIF(WIN32)
 
 include_directories(.)
+include_directories(../../../certs)
 
 add_executable(iothub_client_sample_amqp ${iothub_client_sample_amqp_c_files} ${iothub_client_sample_amqp_h_files})
 

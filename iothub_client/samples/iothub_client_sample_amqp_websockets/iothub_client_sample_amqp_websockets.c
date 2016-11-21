@@ -12,7 +12,7 @@
 #include "iothubtransportamqp_websockets.h"
 #include "../../../certs/certs.h"
 
-static const char* connectionString = "[device connection string]";
+static const char* connectionString = "HostName=mgdan2.private.azure-devices-int.net;DeviceId=dcristo42;SharedAccessKey=R9XLMcAxBudsShhyBSuVIcLouqaIARcCCQs8dN8tc+4=";
 static int callbackCounter;
 
 
@@ -132,7 +132,10 @@ void iothub_client_sample_amqp_websockets_run(void)
     }
     else
     {
-        // For mbed add the certificate information
+		bool traceOn = true;
+		IoTHubClient_SetOption(iotHubClientHandle, "logtrace", &traceOn);
+		
+		// For mbed add the certificate information
         if (IoTHubClient_SetOption(iotHubClientHandle, "TrustedCerts", certificates) != IOTHUB_CLIENT_OK)
         {
             printf("failure to set option \"TrustedCerts\"\r\n");

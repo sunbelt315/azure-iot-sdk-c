@@ -11,14 +11,12 @@
 #include "iothub_message.h"
 #include "iothubtransportamqp.h"
 
-#ifdef MBED_BUILD_TIMESTAMP
 #include "certs.h"
-#endif // MBED_BUILD_TIMESTAMP
 
 /*String containing Hostname, Device Id & Device Key in the format:                         */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
-static const char* connectionString = "[device connection string]";
+static const char* connectionString = "HostName=mgdan2.private.azure-devices-int.net;DeviceId=dcristo42;SharedAccessKey=R9XLMcAxBudsShhyBSuVIcLouqaIARcCCQs8dN8tc+4=";
 
 static int callbackCounter;
 static bool g_continueRunning;
@@ -157,13 +155,11 @@ void iothub_client_sample_amqp_run(void)
             bool traceOn = true;
             IoTHubClient_LL_SetOption(iotHubClientHandle, "logtrace", &traceOn);
 
-#ifdef MBED_BUILD_TIMESTAMP
             // For mbed add the certificate information
             if (IoTHubClient_LL_SetOption(iotHubClientHandle, "TrustedCerts", certificates) != IOTHUB_CLIENT_OK)
             {
                 printf("failure to set option \"TrustedCerts\"\r\n");
             }
-#endif // MBED_BUILD_TIMESTAMP
 
             /* Setting Message call back, so we can receive Commands. */
             if (IoTHubClient_LL_SetMessageCallback(iotHubClientHandle, ReceiveMessageCallback, &receiveContext) != IOTHUB_CLIENT_OK)
