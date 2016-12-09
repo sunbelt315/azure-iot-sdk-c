@@ -16,7 +16,7 @@
 /*String containing Hostname, Device Id & Device Key in the format:                         */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
-static const char* connectionString = "HostName=mgdan2.private.azure-devices-int.net;DeviceId=dcristo42;SharedAccessKey=R9XLMcAxBudsShhyBSuVIcLouqaIARcCCQs8dN8tc+4=";
+static const char* connectionString = "HostName=iothub-client-02.azure-devices.net;DeviceId=test_device;SharedAccessKey=I6Zh2pWn0W0EiON+P9dyf+nYcJMNhILAzDwm2MxzWBM=";
 
 static int callbackCounter;
 static bool g_continueRunning;
