@@ -60,14 +60,16 @@ static void on_umock_c_error(UMOCK_C_ERROR_CODE error_code)
 
 #define TEST_DEVICE_ID                                    "my_device"
 #define TEST_DEVICE_ID_STRING_HANDLE                      (STRING_HANDLE)0x4442
-#define TEST_IOTHUB_HOST_FQDN_STRING_HANDLE               (STRING_HANDLE)0x4443
 #define TEST_IOTHUB_HOST_FQDN                             "some.fqdn.com"
+#define TEST_IOTHUB_HOST_FQDN_STRING_HANDLE               (STRING_HANDLE)0x4443
 #define TEST_ON_STATE_CHANGED_CALLBACK_CONTEXT            (void*)0x4444
 #define TEST_ON_ERROR_CALLBACK_CONTEXT                    (void*)0x4445
 #define TEST_PRIMARY_DEVICE_ID                            "MUhT4tkv1auVqZFQC0lyuHFf6dec+ZhWCgCZ0HcNPuW="
+#define TEST_PRIMARY_DEVICE_ID_STRING_HANDLE              (STRING_HANDLE)0x4446
 #define TEST_SECONDARY_DEVICE_ID                          "WCgCZ0HcNPuWMUhTdec+ZhVqZFQC4tkv1auHFf60lyu="
+#define TEST_SECONDARY_DEVICE_ID_STRING_HANDLE            (STRING_HANDLE)0x4447
 #define TEST_USER_DEFINED_SAS_TOKEN                       "blablabla"
-#define TEST_USER_DEFINED_SAS_TOKEN_STRING_HANDLE         (STRING_HANDLE)0x4446
+#define TEST_USER_DEFINED_SAS_TOKEN_STRING_HANDLE         (STRING_HANDLE)0x4448
 
 
 static AUTHENTICATION_CONFIG global_auth_config;
@@ -129,8 +131,21 @@ static void set_expected_calls_for_authentication_create(AUTHENTICATION_CONFIG* 
 	EXPECTED_CALL(malloc(IGNORED_NUM_ARG));
 	EXPECTED_CALL(memset(IGNORED_PTR_ARG, 0, IGNORED_NUM_ARG)).IgnoreArgument(1).IgnoreArgument(3);
 	STRICT_EXPECTED_CALL(STRING_construct(TEST_DEVICE_ID)).SetReturn(TEST_DEVICE_ID_STRING_HANDLE);
-	STRICT_EXPECTED_CALL(STRING_construct(TEST_USER_DEFINED_SAS_TOKEN)).SetReturn(TEST_USER_DEFINED_SAS_TOKEN_STRING_HANDLE);
 
+	if (config->device_sas_token != NULL)
+	{
+		STRICT_EXPECTED_CALL(STRING_construct(TEST_USER_DEFINED_SAS_TOKEN)).SetReturn(TEST_USER_DEFINED_SAS_TOKEN_STRING_HANDLE);
+	}
+	else
+	{
+		if (config->device_primary_key != NULL)
+			STRICT_EXPECTED_CALL(STRING_construct(TEST_PRIMARY_DEVICE_KEY)).SetReturn(TEST_PRIMARY_DEVICE_KEY_STRING_HANDLE);
+		
+		if (config->device_secondary_key != NULL)
+			STRICT_EXPECTED_CALL(STRING_construct(TEST_SECONDARY_DEVICE_KEY)).SetReturn(TEST_SECONDARY_DEVICE_KEY_STRING_HANDLE);
+	}
+
+	STRICT_EXPECTED_CALL(STRING_construct(TEST_IOTHUB_HOST_FQDN)).SetReturn(TEST_IOTHUB_HOST_FQDN_STRING_HANDLE);
 }
 
 
